@@ -3,7 +3,9 @@ package com.example.mypizza.ui.Content
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -61,8 +63,10 @@ fun MainContent(
             )
             TappingSection(
                 pizzaState = pizzasState[activePizzaIndex],
-                onClickToppingButton = onClickToppingButton
+                onClickToppingButton = onClickToppingButton,
+                modifier = Modifier.weight(1f)
             )
+            Spacer(Modifier.height(24.dp))
         }
     }
 }

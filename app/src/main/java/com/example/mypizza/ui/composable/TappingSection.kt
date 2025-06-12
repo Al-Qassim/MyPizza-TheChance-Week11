@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -35,6 +36,7 @@ import com.example.mypizza.ui.state.getDefaultPizzas
 import com.example.mypizza.ui.state.getDefaultToppingPaintersId
 import com.example.mypizza.ui.state.isToppingUsedOnPizza
 import com.example.mypizza.ui.theme.ActiveTappingButtonColor
+import com.example.mypizza.ui.theme.InactiveTappingButtonColor
 
 @Composable
 fun TappingSection(
@@ -43,7 +45,7 @@ fun TappingSection(
     onClickToppingButton: (PizzaTopping) -> Unit = {}
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier.fillMaxSize()
     ) {
         Text(
             text = "CUSTOMIZE YOUR PIZZA",
@@ -59,33 +61,16 @@ fun TappingSection(
                 .padding(horizontal = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            TappingButton(
-                topping = PizzaTopping.Basil,
-                pizzaState = pizzaState,
-                onClickToppingButton = onClickToppingButton,
-            )
-            TappingButton(
-                topping = PizzaTopping.Onion,
-                pizzaState = pizzaState,
-                onClickToppingButton = onClickToppingButton,
-            )
-            TappingButton(
-                topping = PizzaTopping.Broccoli,
-                pizzaState = pizzaState,
-                onClickToppingButton = onClickToppingButton,
-            )
-            TappingButton(
-                topping = PizzaTopping.Mushroom,
-                pizzaState = pizzaState,
-                onClickToppingButton = onClickToppingButton,
-            )
-            TappingButton(
-                topping = PizzaTopping.Sausage,
-                pizzaState = pizzaState,
-                onClickToppingButton = onClickToppingButton,
-            )
+            PizzaTopping.entries.forEach { topping ->
+                TappingButton(
+                    topping = topping,
+                    pizzaState = pizzaState,
+                    onClickToppingButton = onClickToppingButton,
+                )
+            }
         }
         Spacer(Modifier.padding(top = 42.dp))
+        Spacer(Modifier.weight(1f))
         AddToCartButton(Modifier.align(Alignment.CenterHorizontally))
     }
 }
@@ -99,7 +84,7 @@ fun TappingButton(
 ) {
     val color by animateColorAsState(
         if (isToppingUsedOnPizza(pizzaState, topping)) ActiveTappingButtonColor
-        else ActiveTappingButtonColor.copy(alpha = 0f)
+        else InactiveTappingButtonColor
     )
 
     Box(
